@@ -5,16 +5,27 @@
 
 import java.util.*;
 
+/**
+ * Consider adding javadocs comments here
+ * Refer to https://se-education.org/guides/conventions/java/intermediate.html
+ * for full coding standards
+ */
 public class Editor {
 
-    private static Kattio io;    
+    private static Kattio io;
 
+    /**
+     * Please add javadocs comment here
+     * I have noticed many other places without javadocs comment, please amend.
+     * @param args
+     */
     public static void main(String args[]) {
         Editor runner = new Editor();
         io = new Kattio(System.in, System.out);
 
         int Q = io.getInt();
 
+        //Consider using switch case to improve readability
         for(int i = 0; i < Q; i++) {
             String input = io.getWord();
             if (input.equals("LEFT")) {
@@ -36,7 +47,11 @@ public class Editor {
         }   
         io.close();
     }
-    
+
+    /**
+     * Wrong positioning of variable declaration
+     * Please place at the top of the class structure
+     */
     LinkedList<String> left = new LinkedList<String>();
     LinkedList<String> middle = new LinkedList<String>();
     LinkedList<String> right = new LinkedList<String>();
@@ -44,6 +59,10 @@ public class Editor {
     int marker = 0;
     int cursor = 0;
 
+    /**
+     * please put javadocs comment
+     * for all methods here
+     */
     private void moveLeft() {
         if (cursor > 0) {
             if (marker >= cursor) {
@@ -73,6 +92,10 @@ public class Editor {
         }
     }
 
+    /**
+     * Please use more expressive function names
+     * @param text
+     */
     private void type(String text) {
         if (marker > cursor) {
             left.addLast(text);
@@ -83,7 +106,10 @@ public class Editor {
             cursor++;
         }
     }
-
+    /**
+     * Please use more expressive function names
+     * I have noticed multiple instances of this issue throughout the code, please amend.
+     */
     private void marker() {
         if (marker != cursor) {
             if (marker > cursor) {
