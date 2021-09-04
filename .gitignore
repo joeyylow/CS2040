@@ -1,1 +1,5 @@
-.idea
+# IDEA files
+/.idea/
+/out/
+/*.iml
+src/main/main.iml
