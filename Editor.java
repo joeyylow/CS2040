@@ -6,26 +6,54 @@
 import java.util.*;
 
 /**
- * Consider adding javadocs comments here
- * Refer to https://se-education.org/guides/conventions/java/intermediate.html
- * for full coding standards
+ * This is an Editor class that simulates a text editor.
  */
 public class Editor {
 
+    /**
+     * Usage of Kattio to increase the speed of running the program.
+     */
     private static Kattio io;
 
     /**
-     * Please add javadocs comment here
-     * I have noticed many other places without javadocs comment, please amend.
-     * @param args
+     * Instantiation of three linked lists.
+     * The names of the linked lists represents the relative positions of
+     * the text with reference to the cursor.
+     * `left` is a linked list with characters that are on the left of the
+     * cursor.
+     * `middle` is a linked list with characters that are between the cursor
+     * and the marker.
+     * `right` is a linked list with characters that are on the right of the
+     * cursor.
+     */
+    LinkedList<String> left = new LinkedList<String>();
+    LinkedList<String> middle = new LinkedList<String>();
+    LinkedList<String> right = new LinkedList<String>();
+
+    /**
+     * Integers to keep track of the number of characters that are before
+     * the marker and cursor.
+     */
+    int marker = 0;
+    int cursor = 0;
+
+    /**
+     * The main method is a driver class method that runs the program.
      */
     public static void main(String args[]) {
         Editor runner = new Editor();
         io = new Kattio(System.in, System.out);
 
+        /**
+         * An integer which indicates the number of lines of operation
+         * input by the user.
+         */
         int Q = io.getInt();
 
-        //Consider using switch case to improve readability
+        /**
+         * A for loop that reads each line of input and performs the
+         * operations by calling functions.
+         */
         for(int i = 0; i < Q; i++) {
             String input = io.getWord();
             if (input.equals("LEFT")) {
@@ -34,9 +62,9 @@ public class Editor {
                 runner.moveRight();
             } else if (input.equals("TYPE")) {
                 String text = io.getWord();
-                runner.type(text);
+                runner.typeCharacter(text);
             } else if (input.equals("MARKER")) {
-                runner.marker();
+                runner.positionMarker();
             } else if (input.equals("SHIFTFRONT")) {
                 runner.shiftFront();
             } else if (input.equals("SHIFTBACK")) {
@@ -47,21 +75,9 @@ public class Editor {
         }   
         io.close();
     }
-
+    
     /**
-     * Wrong positioning of variable declaration
-     * Please place at the top of the class structure
-     */
-    LinkedList<String> left = new LinkedList<String>();
-    LinkedList<String> middle = new LinkedList<String>();
-    LinkedList<String> right = new LinkedList<String>();
-
-    int marker = 0;
-    int cursor = 0;
-
-    /**
-     * please put javadocs comment
-     * for all methods here
+     * This method moves the cursor one position to the left.
      */
     private void moveLeft() {
         if (cursor > 0) {
@@ -77,6 +93,9 @@ public class Editor {
         }
     }
 
+    /**
+     * This method moves the cursor one position to the right.
+     */
     private void moveRight() {
         int totalSize = left.size() + middle.size() + right.size();
         if (cursor < totalSize) {
@@ -93,10 +112,13 @@ public class Editor {
     }
 
     /**
-     * Please use more expressive function names
-     * @param text
+     * This method adds a new character at the current position of the
+     * cursor.
+     * After adding the character, the cursor will be on the right of
+     * the new character.
+     * @param text new character that will be added.
      */
-    private void type(String text) {
+    private void typeCharacter(String text) {
         if (marker > cursor) {
             left.addLast(text);
             cursor++;
@@ -106,11 +128,14 @@ public class Editor {
             cursor++;
         }
     }
+
     /**
-     * Please use more expressive function names
-     * I have noticed multiple instances of this issue throughout the code, please amend.
+     * The marker will be positioned at the current position of the
+     * cursor.
+     * Nothing happens if the marker and cursor are already at the same
+     * postion.
      */
-    private void marker() {
+    private void positionMarker() {
         if (marker != cursor) {
             if (marker > cursor) {
                 while (middle.size() != 0) {
@@ -128,6 +153,10 @@ public class Editor {
         }
     }
 
+    /**
+     * Text between cursor and marker will be shifted to the front of
+     * the text.
+     */
     private void shiftFront() {
         if (marker > cursor) {
             cursor = marker;
@@ -144,6 +173,10 @@ public class Editor {
         }
     }
 
+    /**
+     * Text between cursor and marker will be shifted to the back of the
+     * text.
+     */
     private void shiftBack() {
         if (marker > cursor) {
             marker = cursor;
@@ -160,6 +193,10 @@ public class Editor {
         }
     }
 
+    /**
+     * All the text that is in the text editor will be printed out as an
+     * output.
+     */
     private void printResult() {
         for (String s : left) {
             io.print(s);
